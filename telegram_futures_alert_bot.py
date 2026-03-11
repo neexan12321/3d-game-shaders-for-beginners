@@ -12,6 +12,7 @@ BYBIT_KLINE_URL = "https://api.bybit.com/v5/market/kline"
 TELEGRAM_SEND_URL = "https://api.telegram.org/bot{token}/sendMessage"
 INTERVAL_MINUTES = 5
 ALERT_THRESHOLD_USDT = Decimal("25000000")
+ALERT_COOLDOWN_MINUTES = 30
 
 
 def _load_dotenv(path: str = ".env") -> None:
@@ -130,13 +131,18 @@ def main() -> None:
     _load_dotenv()
     token = _require_env("TELEGRAM_BOT_TOKEN")
     chat_id = _require_env("TELEGRAM_CHAT_ID")
+    next_allowed_alert_ts = 0.0
 
     while True:
         try:
             alert = _build_alert_if_needed()
-            if alert:
+            now_ts = time.time()
+            if alert and now_ts >= next_allowed_alert_ts:
                 _send_telegram_message(token, chat_id, alert)
+                next_allowed_alert_ts = now_ts + (ALERT_COOLDOWN_MINUTES * 60)
                 print(f"Alert sent at {datetime.now(timezone.utc).isoformat()}")
+            elif alert:
+                print(f"Alert condition met but cooldown active at {datetime.now(timezone.utc).isoformat()}")
             else:
                 print(f"No alert at {datetime.now(timezone.utc).isoformat()}")
         except Exception as exc:  # noqa: BLE001

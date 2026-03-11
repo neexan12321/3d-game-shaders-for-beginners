@@ -127,6 +127,8 @@ Added `telegram_futures_alert_bot.py` that checks 5m **futures** quote volume (U
 
 It sends a Telegram alert only when at least one exchange has volume **≤ 25,000,000 USDT** on the latest closed 5m candle.
 
+After an alert is sent, the bot enforces a **30-minute cooldown** before the next alert, while still checking the condition every 5 minutes.
+
 ### Run
 
 ```bash
