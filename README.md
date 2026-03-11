@@ -117,3 +117,25 @@ Then just run:
 ```bash
 python3 telegram_volume_bot.py
 ```
+
+## Telegram bot: BTCUSDT futures low-volume alerts (5m)
+
+Added `telegram_futures_alert_bot.py` that checks 5m **futures** quote volume (USDT) for `BTCUSDT` on:
+
+- Binance Futures
+- Bybit Futures
+
+It sends a Telegram alert only when at least one exchange has volume **≤ 20,000,000 USDT** on the latest closed 5m candle.
+
+### Run
+
+```bash
+python3 telegram_futures_alert_bot.py
+```
+
+The script reads `.env` with:
+
+```env
+TELEGRAM_BOT_TOKEN=<your_bot_token>
+TELEGRAM_CHAT_ID=<your_chat_id>
+```
