@@ -74,3 +74,32 @@ No other portion of 3D Game Shaders For Beginners has been licensed for use.
 (C) 2019 David Lettier
 <br>
 [lettier.com](https://www.lettier.com)
+
+## Telegram bot: BTCUSDT 5m volumes (Binance + Bybit)
+
+Added helper script `telegram_volume_bot.py` that sends every 5 minutes trading volume of the latest **closed** 5m candle for:
+
+- Binance Futures `BTCUSDT`
+- Binance Spot `BTCUSDT`
+- Bybit Futures `BTCUSDT`
+- Bybit Spot `BTCUSDT`
+
+### Run
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+# optional: pip install -r requirements-telegram-bot.txt
+
+export TELEGRAM_BOT_TOKEN="<your_bot_token>"
+export TELEGRAM_CHAT_ID="<your_chat_id>"
+python3 telegram_volume_bot.py
+```
+
+Optional:
+
+```bash
+export SEND_ON_START=false
+```
+
+If `SEND_ON_START=true` (default), bot sends one report immediately and then continues on each 5-minute boundary.
