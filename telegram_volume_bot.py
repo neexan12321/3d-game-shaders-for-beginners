@@ -14,6 +14,25 @@ TELEGRAM_SEND_URL = "https://api.telegram.org/bot{token}/sendMessage"
 INTERVAL_MINUTES = 5
 
 
+
+
+def _load_dotenv(path: str = ".env") -> None:
+    if not os.path.exists(path):
+        return
+
+    with open(path, "r", encoding="utf-8") as file:
+        for raw_line in file:
+            line = raw_line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+            key = key.strip()
+            value = value.strip().strip('"').strip("'")
+
+            if key and key not in os.environ:
+                os.environ[key] = value
+
 def _require_env(name: str) -> str:
     value = os.getenv(name, "").strip()
     if not value:
@@ -113,6 +132,7 @@ def _sleep_until_next_5m_boundary() -> None:
 
 
 def main() -> None:
+    _load_dotenv()
     token = _require_env("TELEGRAM_BOT_TOKEN")
     chat_id = _require_env("TELEGRAM_CHAT_ID")
     send_on_start = os.getenv("SEND_ON_START", "true").lower() in {"1", "true", "yes"}

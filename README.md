@@ -103,3 +103,17 @@ export SEND_ON_START=false
 ```
 
 If `SEND_ON_START=true` (default), bot sends one report immediately and then continues on each 5-minute boundary.
+
+You can also create a `.env` file in the project root and run without exporting variables each time:
+
+```env
+TELEGRAM_BOT_TOKEN=<your_bot_token>
+TELEGRAM_CHAT_ID=<your_chat_id>
+SEND_ON_START=true
+```
+
+Then just run:
+
+```bash
+python3 telegram_volume_bot.py
+```
