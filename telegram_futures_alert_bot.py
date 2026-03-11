@@ -71,7 +71,7 @@ def _fetch_binance_futures_quote_volume() -> tuple[str, Decimal]:
     row = closed[-1]
     open_time = int(row[0])
     quote_volume = Decimal(row[7])
-    candle_time = datetime.fromtimestamp(open_time / 1000, tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    candle_time = datetime.fromtimestamp(open_time / 1000, tz=timezone.utc).strftime("%d-%m %H:%M")
     return candle_time, quote_volume
 
 
@@ -91,7 +91,7 @@ def _fetch_bybit_futures_quote_volume() -> tuple[str, Decimal]:
     start_time = int(row[0])
     # turnover is quote volume in USDT.
     quote_volume = Decimal(row[6])
-    candle_time = datetime.fromtimestamp(start_time / 1000, tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    candle_time = datetime.fromtimestamp(start_time / 1000, tz=timezone.utc).strftime("%d-%m %H:%M")
     return candle_time, quote_volume
 
 

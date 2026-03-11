@@ -74,7 +74,7 @@ def _fetch_binance_volume(symbol: str, market_name: str, url: str) -> tuple[str,
     open_time = int(row[0])
     # Binance kline index 7 is quote asset volume (USDT for BTCUSDT).
     volume = row[7]
-    candle_time = datetime.fromtimestamp(open_time / 1000, tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    candle_time = datetime.fromtimestamp(open_time / 1000, tz=timezone.utc).strftime("%d-%m %H:%M")
     return candle_time, volume
 
 
@@ -94,7 +94,7 @@ def _fetch_bybit_volume(symbol: str, category: str, market_name: str) -> tuple[s
     start_time = int(row[0])
     # Bybit kline index 6 is turnover (quote volume, USDT for BTCUSDT).
     volume = row[6]
-    candle_time = datetime.fromtimestamp(start_time / 1000, tz=timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    candle_time = datetime.fromtimestamp(start_time / 1000, tz=timezone.utc).strftime("%d-%m %H:%M")
     return candle_time, volume
 
 
